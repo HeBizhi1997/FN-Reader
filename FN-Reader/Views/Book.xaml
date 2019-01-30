@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="FN_Reader.Views.Book"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FN_Reader.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="380">
+    <GroupBox>
+        <GroupBox.HeaderTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                                    Kind="BookMultiple"
+                                    Height="32"
+                                    Width="32"
+                                    VerticalAlignment="Center" />
+                    <TextBlock  Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
+                                Text="{Binding Path=BookName,RelativeSource={ RelativeSource  Mode=FindAncestor, AncestorType={x:Type local:Book}, AncestorLevel=1 }}" />
+                </StackPanel>
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image Grid.Column="0" Grid.RowSpan="1" 
+                               Source="{Binding Path=Picture,RelativeSource={ RelativeSource  Mode=FindAncestor, AncestorType={x:Type local:Book}, AncestorLevel=1 }}" 
+                               Width="143" Height="176" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Stretch="Fill"/>
+            <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="作    者：" />
+                    <TextBlock Grid.Column="1" Text="{Binding Path=BookAuthor,RelativeSource={ RelativeSource  Mode=FindAncestor, AncestorType={x:Type local:Book}, AncestorLevel=1 }}" />
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="最后更新："/>
+                    <TextBlock Grid.Column="1" Text="{Binding Path=LastUpDate,RelativeSource={ RelativeSource  Mode=FindAncestor, AncestorType={x:Type local:Book}, AncestorLevel=1 }}" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="最新章节："/>
+                    <TextBlock Grid.Column="1" Text="{Binding Path=Lately,RelativeSource={ RelativeSource  Mode=FindAncestor, AncestorType={x:Type local:Book}, AncestorLevel=1 }}" />
+                </Grid>
+            </StackPanel>
+            <TextBlock Grid.Column="1" Grid.Row="3" 
+                Text="{Binding Path=Intro,RelativeSource={ RelativeSource  Mode=FindAncestor, AncestorType={x:Type local:Book}, AncestorLevel=1 }}"  
+                TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Grid>
+    </GroupBox>
+</UserControl>

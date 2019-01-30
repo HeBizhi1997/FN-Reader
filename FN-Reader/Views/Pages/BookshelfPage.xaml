@@ -1,0 +1,22 @@
+﻿<Page x:Class="FN_Reader.Views.Pages.BookshelfPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FN_Reader.Views.Pages"
+      xmlns:views="clr-namespace:FN_Reader.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1200"
+      Title="BookshelfPage">
+    <WrapPanel>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+        <views:Book Width="380" Margin="5"/>
+    </WrapPanel>
+</Page>
