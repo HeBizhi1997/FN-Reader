@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FN-Reader", "FN-Reader\FN-R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCrawl", "WebCrawl\WebCrawl.csproj", "{13F41229-AEA2-4591-AE47-33B88CE95B28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.Crawler", "FNR.Crawler\FNR.Crawler.csproj", "{040D755B-BC58-4342-B134-258D0F7F25BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.IPChange", "FNR.IPChange\FNR.IPChange.csproj", "{3EC6CEB9-5757-4D44-AEDF-78FE14314845}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{13F41229-AEA2-4591-AE47-33B88CE95B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F41229-AEA2-4591-AE47-33B88CE95B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F41229-AEA2-4591-AE47-33B88CE95B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{040D755B-BC58-4342-B134-258D0F7F25BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{040D755B-BC58-4342-B134-258D0F7F25BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{040D755B-BC58-4342-B134-258D0F7F25BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{040D755B-BC58-4342-B134-258D0F7F25BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EC6CEB9-5757-4D44-AEDF-78FE14314845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EC6CEB9-5757-4D44-AEDF-78FE14314845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EC6CEB9-5757-4D44-AEDF-78FE14314845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EC6CEB9-5757-4D44-AEDF-78FE14314845}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
