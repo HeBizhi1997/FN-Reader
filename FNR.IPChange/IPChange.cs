@@ -14,7 +14,7 @@ namespace FNR.IPChange
         /// Deploying proxy Ip
         /// </summary>
         /// <param name="proxyIp">proxy Ip</param>
-        public void SetProxyIP(string proxyIp)
+        public static void SetProxyIP(string proxyIp)
         {
             const int INTERNET_OPTION_PROXY = 38;
             const int INTERNET_OPEN_TYPE_PROXY = 3;
