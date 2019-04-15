@@ -1,0 +1,76 @@
+﻿<Window x:Class="FNR.View.StartWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:dialog="clr-namespace:FNR.Component;assembly=FNR.Component"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:FNR.View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Title="FN-Reader" 
+        Height="600"
+        Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--Header-->
+        <Grid Grid.Row="0" MouseLeftButtonDown="MoveWinodw">
+            <materialDesign:ColorZone Mode="PrimaryMid" x:Name="NavBar"  Height="35" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                <Grid x:Name="Header" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <!--菜单按钮-->
+                        <ToggleButton x:Name="MenuToggleButton" Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False" Width="45" Height="25"/>
+                        <!--头像-->
+                        <Ellipse Cursor="Hand"
+                             Width="30"
+                             Height="30">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/Avatar.jpg"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <!--标题-->
+                        <TextBlock VerticalAlignment="Center" Foreground="White" FontFamily="Ink Free" FontSize="16" Margin="5,0,0,0" Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartWindow}}}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <!--Themes Selecter Btn-->
+                        <Button x:Name="ThemesBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="ShowSystemThemes">
+                            <materialDesign:PackIcon Kind="ColorLens"/>
+                        </Button>
+                        <!--Login Btn-->
+                        <Button x:Name="LoginBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}">
+                            <materialDesign:PackIcon Kind="Account"/>
+                        </Button>
+                        <!--MinWindowState Btn-->
+                        <Button x:Name="MinWindowBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="MinimizeWindow">
+                            <materialDesign:PackIcon Kind="WindowMinimize"/>
+                        </Button>
+                        <!--MaxWindowState Btn-->
+                        <Button x:Name="MaxWindowBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="MaximizeWindow">
+                            <materialDesign:PackIcon Kind="WindowMaximize"/>
+                        </Button>
+                        <!--Power Btn-->
+                        <Button x:Name="CloseBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="CloseWindow">
+                            <materialDesign:PackIcon Kind="Power"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:ColorZone>
+        </Grid>
+
+        <!--Body-->
+        <Grid Grid.Row="1">
+            <metroControls:Flyout x:Name="LeftThemesChangeFlyout" Position="Left" materialDesign:FlyoutAssist.HeaderColorMode="Standard" IsOpen="False" Panel.ZIndex="100">
+                <dialog:ThemesChangeDialog/>
+            </metroControls:Flyout>
+        </Grid>
+    </Grid>
+</Window>
