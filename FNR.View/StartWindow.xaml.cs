@@ -28,7 +28,7 @@ namespace FNR.View
 
         private void ShowSystemThemes(object sender, RoutedEventArgs e)
         {
-            LeftThemesChangeFlyout.IsOpen = !LeftThemesChangeFlyout.IsOpen;
+
         }
 
         //private void ShowLoginDialog(object sender, RoutedEventArgs e)

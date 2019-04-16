@@ -68,9 +68,9 @@
 
         <!--Body-->
         <Grid Grid.Row="1">
-            <metroControls:Flyout x:Name="LeftThemesChangeFlyout" Position="Left" materialDesign:FlyoutAssist.HeaderColorMode="Standard" IsOpen="False" Panel.ZIndex="100">
-                <dialog:ThemesChangeDialog/>
-            </metroControls:Flyout>
+            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                <dialog:ColorWheel Stretch="Uniform"/>
+            </materialDesign:ColorZone>
         </Grid>
     </Grid>
 </Window>

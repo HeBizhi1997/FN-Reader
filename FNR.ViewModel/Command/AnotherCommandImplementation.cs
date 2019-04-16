@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace FNR.ViewModel
+namespace FNR.ViewModel.Command
 {
     public class AnotherCommandImplementation : ICommand
     {

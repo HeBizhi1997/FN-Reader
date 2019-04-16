@@ -1,6 +1,5 @@
-﻿using System.Windows.Controls;
-using FNR.ViewModel;
-
+﻿using FNR.ViewModel;
+using System.Windows.Controls;
 namespace FNR.Component
 {
     /// <summary>

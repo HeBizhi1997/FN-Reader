@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using System.Windows.Media;
-
+using FNR.ViewModel.Command;
 
 namespace FNR.ViewModel
 {
@@ -59,5 +59,6 @@ namespace FNR.ViewModel
         {
             new PaletteHelper().ReplaceAccentColor(swatch);
         }
+
     }
 }
