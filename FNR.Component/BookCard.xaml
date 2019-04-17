@@ -33,7 +33,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="作者  " Foreground="#B7B7B7" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="作者  " Foreground="#B7B7B7" TextAlignment="Left"/>
                         <TextBlock Grid.Column="1" Text="{Binding Author}" />
                     </Grid>
                     <Grid HorizontalAlignment="Center" Width="200">
@@ -42,7 +42,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="类型  " Foreground="#B7B7B7" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="类型  " Foreground="#B7B7B7" TextAlignment="Left"/>
                         <TextBlock Grid.Column="1" Text="{Binding Type}" />
                     </Grid>
                     <Grid HorizontalAlignment="Center" Width="200">
@@ -51,7 +51,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="最新章节  " Foreground="#B7B7B7" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="最新章节  " Foreground="#B7B7B7" TextAlignment="Left"/>
                         <TextBlock Grid.Column="1" Text="{Binding Lately}" />
                     </Grid>
                     <Grid HorizontalAlignment="Center" Width="200">
@@ -60,7 +60,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="最后更新  " Foreground="#B7B7B7" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="最后更新  " Foreground="#B7B7B7" TextAlignment="Left"/>
                         <TextBlock Grid.Column="1" Text="{Binding Update,StringFormat='yyyy-MM-dd HH:mm:ss'}" />
                     </Grid>
                     <Grid HorizontalAlignment="Center" Width="200">
@@ -69,7 +69,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="更新状态  " Foreground="#B7B7B7" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="更新状态  " Foreground="#B7B7B7" TextAlignment="Left"/>
                         <TextBlock Grid.Column="1" Text="{Binding State}" />
                     </Grid>
                     <Grid HorizontalAlignment="Center" Width="200">
@@ -77,7 +77,7 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="简介  " Foreground="#B7B7B7" TextAlignment="Right"/>
+                        <TextBlock Text="简介  " Foreground="#B7B7B7" TextAlignment="Left"/>
                     </Grid>
                     <Grid HorizontalAlignment="Center" Width="240">
                         <TextBlock Text="{Binding Intro}" TextWrapping="Wrap"/>
@@ -87,16 +87,10 @@
                 <Button  Style="{StaticResource MaterialDesignFloatingActionButton}"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
-                                    Margin="0 0 5 10"
+                                    Margin="0 0 5 10" Width="35" Height="35"
                                     BorderBrush="{x:Null}"
                                     ToolTip="阅读">
-                    <Viewbox Width="24" Height="24">
-                        <Canvas Width="24" Height="24">
-                            <Path Data="M17,11H15V9H17M13,11H11V9H13M9,11H7V9H9M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z"
-                                              Fill="White" />
-                        </Canvas>
-                    </Viewbox>
-
+                    <materialDesign:PackIcon Kind="Book"/>
                 </Button>
             </Grid>
         </Grid>

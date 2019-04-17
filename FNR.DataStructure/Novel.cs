@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FNR.Model
+namespace FNR.DataStructure
 {
-    public class NovelModel
+    public class Novel
     {
         public int Id { get; set; } = -1;  
         public string Name { get; set; }  

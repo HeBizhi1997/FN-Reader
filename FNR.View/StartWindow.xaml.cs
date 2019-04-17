@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using FNR.Common;
+using FNR.ViewModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace FNR.View
@@ -13,46 +17,5 @@ namespace FNR.View
             InitializeComponent();
         }
 
-        #region Window Commands
-
-        private void ShowSystemMenu(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (!(e.OriginalSource is FrameworkElement element))
-                return;
-
-            var point = WindowState == WindowState.Maximized ? new Point(0, element.ActualHeight)
-                : new Point(Left + BorderThickness.Left, element.ActualHeight + Top + BorderThickness.Top);
-            point = element.TransformToAncestor(this).Transform(point);
-            SystemCommands.ShowSystemMenu(this, point);
-        }
-
-        private void ShowSystemThemes(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        //private void ShowLoginDialog(object sender, RoutedEventArgs e)
-        //{
-        //    CurrentPage = ApplicationPages.Login;
-        //    _HeadMenu.Visibility = Visibility.Collapsed;
-        //}
-
-        private void MoveWinodw(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-        private void CloseWindow(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-        private void MaximizeWindow(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = this.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-        }
-        private void MinimizeWindow(object sender, RoutedEventArgs e)
-        {
-            SystemCommands.MinimizeWindow(this);
-        }
-        #endregion
     }
 }

@@ -1,76 +1,170 @@
-﻿<Window x:Class="FNR.View.StartWindow"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:dialog="clr-namespace:FNR.Component;assembly=FNR.Component"
+﻿<Window xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:ctrls="clr-namespace:FNR.Component;assembly=FNR.Component"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FNR.View"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:ViewModel="clr-namespace:FNR.ViewModel;assembly=FNR.ViewModel"
+        x:Class="FNR.View.StartWindow"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         Title="FN-Reader" 
         Height="600"
         Width="1000">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <!--Header-->
-        <Grid Grid.Row="0" MouseLeftButtonDown="MoveWinodw">
-            <materialDesign:ColorZone Mode="PrimaryMid" x:Name="NavBar"  Height="35" materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                <Grid x:Name="Header" Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                        <!--菜单按钮-->
-                        <ToggleButton x:Name="MenuToggleButton" Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False" Width="45" Height="25"/>
-                        <!--头像-->
-                        <Ellipse Cursor="Hand"
-                             Width="30"
-                             Height="30">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/Avatar.jpg"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <!--标题-->
-                        <TextBlock VerticalAlignment="Center" Foreground="White" FontFamily="Ink Free" FontSize="16" Margin="5,0,0,0" Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartWindow}}}"/>
-                    </StackPanel>
+    <Window.DataContext>
+        <ViewModel:StartWinodwViewModel/>
+    </Window.DataContext>
 
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <!--Themes Selecter Btn-->
-                        <Button x:Name="ThemesBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="ShowSystemThemes">
-                            <materialDesign:PackIcon Kind="ColorLens"/>
-                        </Button>
-                        <!--Login Btn-->
-                        <Button x:Name="LoginBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}">
-                            <materialDesign:PackIcon Kind="Account"/>
-                        </Button>
-                        <!--MinWindowState Btn-->
-                        <Button x:Name="MinWindowBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="MinimizeWindow">
-                            <materialDesign:PackIcon Kind="WindowMinimize"/>
-                        </Button>
-                        <!--MaxWindowState Btn-->
-                        <Button x:Name="MaxWindowBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="MaximizeWindow">
-                            <materialDesign:PackIcon Kind="WindowMaximize"/>
-                        </Button>
-                        <!--Power Btn-->
-                        <Button x:Name="CloseBtn" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Click="CloseWindow">
-                            <materialDesign:PackIcon Kind="Power"/>
-                        </Button>
+    <materialDesign:DrawerHost>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--头部-->
+            <Grid Grid.Row="0">
+                <materialDesign:ColorZone Mode="PrimaryDark" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding WinMoveCommand}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding WinMaximizeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid x:Name="Header" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <!--菜单按钮-->
+                            <Button Background="Transparent" BorderThickness="0" Width="45" Height="25" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Left}">
+                                <materialDesign:PackIcon Kind="Menu"/>
+                            </Button>
+                            <!--头像-->
+                            <Ellipse Cursor="Hand" ToolTip="管理员"
+                             Width="30" Height="30">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/Avatar.jpg"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <!--标题-->
+                            <TextBlock VerticalAlignment="Center" Foreground="White" FontFamily="Ink Free" FontSize="16" Margin="5,0,0,0" Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartWindow}}}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <!--Themes Selecter Btn-->
+                            <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Bottom}">
+                                <materialDesign:PackIcon Kind="ColorLens"/>
+                            </Button>
+                            <!--Login Btn-->
+                            <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Right}">
+                                <materialDesign:PackIcon Kind="Account"/>
+                            </Button>
+                            <!--MinWindowState Btn-->
+                            <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinMinimizeCommand}" >
+                                <materialDesign:PackIcon Kind="WindowMinimize"/>
+                            </Button>
+                            <Button Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinMaximizeCommand}" >
+                                <materialDesign:PackIcon Kind="WindowMaximize"/>
+                            </Button>
+                            <!--Power Btn-->
+                            <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinCloseCommand}">
+                                <materialDesign:PackIcon Kind="Power"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:ColorZone>
+            </Grid>
+
+            <!--中心内容区域-->
+            <Grid  Grid.Row="1">
+                <Grid.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/StarRiver.jpg"/>
+                </Grid.Background>
+                <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage,Converter={local:PageValueConverter}}"/>
+            </Grid>
+        </Grid>
+
+        <!--底部弹框 改变颜色主题-->
+        <materialDesign:DrawerHost.BottomDrawerContent>
+            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                <Grid Width="800">
+                    <TextBox Text="选择主题颜色及风格" HorizontalAlignment="Center" IsReadOnly="True" Margin="0 5"/>
+                    <ctrls:ColorWheel Stretch="Uniform" Height="400"/>
+                    <StackPanel Orientation="Vertical" Width="300" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBox Text="① Primary系列" HorizontalAlignment="Center" IsReadOnly="True" Margin="0 5"/>
+                        <TextBox Text="② Accent 系列" HorizontalAlignment="Center" IsReadOnly="True" Margin="0 5"/>
+                        <TextBox Text="③ Dark/Light 改变Standard系列 " HorizontalAlignment="Center" IsReadOnly="True" Margin="0 5"/>
                     </StackPanel>
                 </Grid>
             </materialDesign:ColorZone>
-        </Grid>
+        </materialDesign:DrawerHost.BottomDrawerContent>
 
-        <!--Body-->
-        <Grid Grid.Row="1">
-            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                <dialog:ColorWheel Stretch="Uniform"/>
+        <!--右侧弹框 登录-->
+        <materialDesign:DrawerHost.RightDrawerContent>
+            <materialDesign:ColorZone Mode="PrimaryMid" materialDesign:ShadowAssist.ShadowDepth="Depth3" Width="300" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
+                <StackPanel VerticalAlignment="Center" Width="200">
+                    <TextBox materialDesign:HintAssist.Hint="Login Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" HorizontalAlignment="Center" Margin="0 5"/>
+                    <PasswordBox materialDesign:HintAssist.Hint="Login Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Width="200" HorizontalAlignment="Center" Margin="0 5"/>
+                    <Button Width="100" Content="登录" HorizontalAlignment="Right" Margin="0 15" Command="{Binding LoginCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}" />
+                </StackPanel>
             </materialDesign:ColorZone>
-        </Grid>
-    </Grid>
+        </materialDesign:DrawerHost.RightDrawerContent>
+
+        <!--左侧弹框 内容切换-->
+        <materialDesign:DrawerHost.LeftDrawerContent>
+            <materialDesign:ColorZone Mode="PrimaryMid" materialDesign:ShadowAssist.ShadowDepth="Depth3" Width="300" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Button Width="55" Height="55" HorizontalAlignment="Right" Margin="20 0" HorizontalContentAlignment="Right"
+                            Style="{StaticResource MaterialDesignRaisedButton}" 
+                            materialDesign:ButtonProgressAssist.Value="-1"
+                            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                            Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}">
+                        <materialDesign:PackIcon Kind="ArrowLeft"/>
+                    </Button>
+
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                        <ListView>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectItemChangedCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            
+                            <ListViewItem Height="45">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <materialDesign:ColorZone Mode="PrimaryDark" Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+                                        <materialDesign:PackIcon Kind="Search" Margin="15 0"/>
+                                    </materialDesign:ColorZone>
+                                    <TextBlock Text="搜索" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ListViewItem>
+
+                            <ListViewItem Height="45" Visibility="{Binding IsAdminLogin,Converter={local:Bool2VisibleConverter}}">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <materialDesign:ColorZone Mode="PrimaryDark" Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+                                        <materialDesign:PackIcon Kind="DownloadNetwork" Margin="15 0"/>
+                                    </materialDesign:ColorZone>
+                                    <TextBlock Text="获取数据" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ListViewItem>
+
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </materialDesign:ColorZone>
+        </materialDesign:DrawerHost.LeftDrawerContent>
+
+    </materialDesign:DrawerHost>
 </Window>

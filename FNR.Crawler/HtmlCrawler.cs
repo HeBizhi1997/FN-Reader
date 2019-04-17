@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace FNR.Crawler
 {
-    public class Crawler : ICrawler
+    public class HtmlCrawler
     {
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace FNR.Crawler
         /// </summary>
         /// <param name="url">website url</param>
         /// <returns>web content</returns>
-        public string GetHtmlContent(Uri url)
+        public static string GetHtmlContent(Uri url)
         {
             return GetHtmlContent(url.ToString());
         }
@@ -26,7 +26,7 @@ namespace FNR.Crawler
         /// </summary>
         /// <param name="url">website url</param>
         /// <returns>web Image</returns>
-        public Image GetHtmlImage(Uri url)
+        public static Image GetHtmlImage(Uri url)
         {
             return GetHtmlImage(url.ToString());
         }
@@ -41,7 +41,7 @@ namespace FNR.Crawler
         /// </summary>
         /// <param name="url">website url</param>
         /// <returns>web encoding</returns>
-        private Encoding GetEncoding(string url)
+        private static Encoding GetEncoding(string url)
         {
             //generate http webRequest
             if (url != null && url != "")
@@ -89,7 +89,7 @@ namespace FNR.Crawler
         /// </summary>
         /// <param name="url">website url</param>
         /// <returns>web content</returns>
-        private string GetHtmlContent(string url)
+        private static string GetHtmlContent(string url)
         {
             string htmlContent;
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -133,7 +133,7 @@ namespace FNR.Crawler
         /// </summary>
         /// <param name="url">website url</param>
         /// <returns>web Image</returns>
-        private Image GetHtmlImage(string url)
+        private static Image GetHtmlImage(string url)
         {
             HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(url);
             Request.Headers.Add("Accept-Encoding", "gzip, deflate");
