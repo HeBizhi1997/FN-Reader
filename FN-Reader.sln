@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.DataStructure", "FNR.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.Common", "FNR.Common\FNR.Common.csproj", "{62B8A23D-509A-4D31-9744-0C6DAC36FE16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.ElasticSearch", "FNR.ElasticSearch\FNR.ElasticSearch.csproj", "{50A8FCC7-401B-4FB9-B7AB-CF47826EE8EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{62B8A23D-509A-4D31-9744-0C6DAC36FE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62B8A23D-509A-4D31-9744-0C6DAC36FE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62B8A23D-509A-4D31-9744-0C6DAC36FE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A8FCC7-401B-4FB9-B7AB-CF47826EE8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A8FCC7-401B-4FB9-B7AB-CF47826EE8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A8FCC7-401B-4FB9-B7AB-CF47826EE8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A8FCC7-401B-4FB9-B7AB-CF47826EE8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

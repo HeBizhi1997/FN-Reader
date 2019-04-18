@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using FNR.Crawler;
 using System.Windows;
 using System.Threading.Tasks;
+using FNR.ElasticSearch;
 
 namespace FNR.ViewModel
 {
@@ -203,10 +204,14 @@ namespace FNR.ViewModel
             else
             {
                 ExtractingHomePageData();
+
+                InsertOrUpdateDate();
+
                 CurrentDownloadHomePageMessage = "【任务完成】";
                 CurrentDownloadHomePageProgress = 100d;
             }
             IsWorkNotRuning = true;
+
         }
 
         private void Worker_DownloadHomePageProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -238,7 +243,14 @@ namespace FNR.ViewModel
 
 
 
-
+        private void InsertOrUpdateDate()
+        {
+            ElasticHelper.CreateIndex();
+            foreach (var item in NovelList)
+            {
+                ElasticHelper.Insert(item);
+            }
+        }
 
 
 
