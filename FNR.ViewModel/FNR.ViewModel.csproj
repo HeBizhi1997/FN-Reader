@@ -76,6 +76,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataDownloadViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -105,6 +106,18 @@
     <ProjectReference Include="..\FNR.Common\FNR.Common.csproj">
       <Project>{62B8A23D-509A-4D31-9744-0C6DAC36FE16}</Project>
       <Name>FNR.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FNR.Crawler\FNR.Crawler.csproj">
+      <Project>{040d755b-bc58-4342-b134-258d0f7f25bf}</Project>
+      <Name>FNR.Crawler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FNR.DataStructure\FNR.DataStructure.csproj">
+      <Project>{DB6F00C7-7B28-4E50-B4A0-FFADBE8C938E}</Project>
+      <Name>FNR.DataStructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FNR.IPChange\FNR.IPChange.csproj">
+      <Project>{3ec6ceb9-5757-4d44-aedf-78fe14314845}</Project>
+      <Name>FNR.IPChange</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

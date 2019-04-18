@@ -46,16 +46,20 @@
                                 <materialDesign:PackIcon Kind="Menu"/>
                             </Button>
                             <!--头像-->
-                            <Ellipse Cursor="Hand" ToolTip="管理员"
+                            <Ellipse Cursor="Hand" ToolTip="{Binding UserName}"
                              Width="30" Height="30">
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/Avatar.jpg"/>
+                                    <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/Image/Avatar.jpg"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <!--标题-->
-                            <TextBlock VerticalAlignment="Center" Foreground="White" FontFamily="Ink Free" FontSize="16" Margin="5,0,0,0" Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartWindow}}}"/>
+                            <!--名字-->
+                            <TextBlock VerticalAlignment="Bottom" Foreground="White" FontFamily="Ink Free" FontSize="12" Margin="5" Text="{Binding UserName}"/>
                         </StackPanel>
 
+                        <Grid Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontFamily="Ink Free" FontSize="16"  Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartWindow}}}"/>
+                        </Grid>
+                        
                         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <!--Themes Selecter Btn-->
                             <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Bottom}">
@@ -69,7 +73,7 @@
                             <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinMinimizeCommand}" >
                                 <materialDesign:PackIcon Kind="WindowMinimize"/>
                             </Button>
-                            <Button Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinMaximizeCommand}" >
+                            <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinMaximizeCommand}" >
                                 <materialDesign:PackIcon Kind="WindowMaximize"/>
                             </Button>
                             <!--Power Btn-->
@@ -84,7 +88,7 @@
             <!--中心内容区域-->
             <Grid  Grid.Row="1">
                 <Grid.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/StarRiver.jpg"/>
+                    <ImageBrush ImageSource="pack://application:,,,/FNR.View;component/Image/StarRiver.jpg"/>
                 </Grid.Background>
                 <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage,Converter={local:PageValueConverter}}"/>
             </Grid>
@@ -125,7 +129,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Button Width="55" Height="55" HorizontalAlignment="Right" Margin="20 0" HorizontalContentAlignment="Right"
+                    <Button Width="55" Height="35" HorizontalAlignment="Right" Margin="20 0" HorizontalContentAlignment="Right"
                             Style="{StaticResource MaterialDesignRaisedButton}" 
                             materialDesign:ButtonProgressAssist.Value="-1"
                             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"

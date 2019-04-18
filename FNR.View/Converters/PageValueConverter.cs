@@ -14,7 +14,7 @@ namespace FNR.View
                 case ApplicationPages.NovelSearch:
                     return new SearchPage();
                 case ApplicationPages.DataDownLoad:
-                    return new System.Windows.Controls.Page();
+                    return new DataDownload();
                 default:
                     Debugger.Break();
                     return null;

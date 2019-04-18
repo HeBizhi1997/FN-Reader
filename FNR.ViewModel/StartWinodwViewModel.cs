@@ -33,6 +33,13 @@ namespace FNR.ViewModel
             set { SetProperty(ref isAdminLogin, value); }
         }
 
+        private string userName = "何毕之";
+        public string UserName
+        {
+            get { return userName; }
+            set { SetProperty(ref userName, value); }
+        }
+
         public StartWinodwViewModel()
         {
             SelectItemChangedCommand = new DelegateCommand<object>((p) =>
@@ -62,6 +69,7 @@ namespace FNR.ViewModel
                         MessageBox.Show("登陆成功！");
 
                         IsAdminLogin = true;
+                        UserName = "管理员";
                     }
                     else
                         MessageBox.Show("登陆失败！");

@@ -61,7 +61,7 @@ namespace FNR.Crawler
         /// <param name="novel"></param>
         /// <param name="htmlContent"></param>
         /// <returns></returns>
-        public static Novel AnalysisIndexPage(Novel novel, string htmlContent)
+        public static Novel AnalysisHomePage(Novel novel, string htmlContent)
         {
             novel.Intro = Regex.Match(htmlContent, "<p>([^<]+?)<br[^/]+/>").Groups[1].Value.Replace("&nbsp;", "").Trim();
             //novel.Cover = new Crawler.Crawler().GetHtmlImage(Regex.Match(htmlContent, "https://www.23us.so/files/article/image/.+s.jpg").Value);
@@ -117,6 +117,16 @@ namespace FNR.Crawler
                 .Replace("&nbsp;", "")
                 .Replace("<br />", "\r\n")
                 , @"\s\s\s\s\s\s\s\s\s\s", "\r\n");
+        }
+
+        /// <summary>
+        /// 提取总榜的页数
+        /// </summary>
+        /// <param name="htmlContent"></param>
+        /// <returns></returns>
+        public static int AnalysisTotalRankPageCount(string htmlContent)
+        {
+            return int.Parse(Regex.Match(htmlContent, @"<em id=""pagestats"">1/([0-9]+)</em>").Groups[1].Value);
         }
     }
 }
