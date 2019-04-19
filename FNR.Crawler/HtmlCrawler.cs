@@ -106,8 +106,8 @@ namespace FNR.Crawler
                     using (var zipStream =
                         new System.IO.Compression.GZipStream(streamReceive, System.IO.Compression.CompressionMode.Decompress))
                     {
-                        Encoding encoding = GetEncoding(url);
-                        using (StreamReader sr = new StreamReader(zipStream, encoding))
+                        //Encoding encoding = GetEncoding(url);
+                        using (StreamReader sr = new StreamReader(zipStream, Encoding.UTF8))
                         {
                             htmlContent = sr.ReadToEnd();
                         }
@@ -118,8 +118,8 @@ namespace FNR.Crawler
             {
                 using (Stream streamReceive = webResponse.GetResponseStream())
                 {
-                    Encoding encoding = GetEncoding(url);
-                    using (StreamReader sr = new StreamReader(streamReceive, encoding))
+                    //Encoding encoding = GetEncoding(url);
+                    using (StreamReader sr = new StreamReader(streamReceive, Encoding.UTF8))
                     {
                         htmlContent = sr.ReadToEnd();
                     }
@@ -143,8 +143,8 @@ namespace FNR.Crawler
                 using (var zipStream =
                     new System.IO.Compression.GZipStream(streamReceive, System.IO.Compression.CompressionMode.Decompress))
                 {
-                    Encoding enc = GetEncoding(url);
-                    using (StreamReader sr = new StreamReader(zipStream, enc))
+                    //Encoding enc = GetEncoding(url);
+                    using (StreamReader sr = new StreamReader(zipStream, Encoding.UTF8))
                     {
                         return Image.FromStream(sr.BaseStream, true);
                     }
