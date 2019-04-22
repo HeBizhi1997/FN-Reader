@@ -50,6 +50,7 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.1.1345, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Nest, Version=6.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d" />
     <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -115,9 +116,9 @@
       <Project>{040d755b-bc58-4342-b134-258d0f7f25bf}</Project>
       <Name>FNR.Crawler</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FNR.DataStructure\FNR.DataStructure.csproj">
+    <ProjectReference Include="..\FNR.DataStructure\FNR.Model.csproj">
       <Project>{DB6F00C7-7B28-4E50-B4A0-FFADBE8C938E}</Project>
-      <Name>FNR.DataStructure</Name>
+      <Name>FNR.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\FNR.ElasticSearch\FNR.ElasticSearch.csproj">
       <Project>{50a8fcc7-401b-4fb9-b7ab-cf47826ee8ef}</Project>

@@ -1,9 +1,7 @@
 ﻿using Prism.Mvvm;
 using Prism.Commands;
-using System.Windows.Controls;
-using FNR.DataStructure;
+using FNR.Model;
 using System.Collections.Generic;
-using FNR.Component;
 
 namespace FNR.ViewModel
 {

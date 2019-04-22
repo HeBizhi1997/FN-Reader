@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using FNR.DataStructure;
+using FNR.Model;
 using Prism.Commands;
 using Prism.Mvvm;
 using FNR.Crawler;

@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.Component", "FNR.Compon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.ViewModel", "FNR.ViewModel\FNR.ViewModel.csproj", "{D8A63C94-71A7-482D-9A61-29BE88D1FFE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.DataStructure", "FNR.DataStructure\FNR.DataStructure.csproj", "{DB6F00C7-7B28-4E50-B4A0-FFADBE8C938E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.Model", "FNR.DataStructure\FNR.Model.csproj", "{DB6F00C7-7B28-4E50-B4A0-FFADBE8C938E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNR.Common", "FNR.Common\FNR.Common.csproj", "{62B8A23D-509A-4D31-9744-0C6DAC36FE16}"
 EndProject

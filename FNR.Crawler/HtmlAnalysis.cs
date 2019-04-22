@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using FNR.DataStructure;
+using FNR.Model;
 
 namespace FNR.Crawler
 {

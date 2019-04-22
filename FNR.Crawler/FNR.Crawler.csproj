@@ -47,9 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FNR.DataStructure\FNR.DataStructure.csproj">
+    <ProjectReference Include="..\FNR.DataStructure\FNR.Model.csproj">
       <Project>{db6f00c7-7b28-4e50-b4a0-ffadbe8c938e}</Project>
-      <Name>FNR.DataStructure</Name>
+      <Name>FNR.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

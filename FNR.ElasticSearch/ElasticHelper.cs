@@ -1,5 +1,5 @@
 ﻿using Elasticsearch.Net;
-using FNR.DataStructure;
+using FNR.Model;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -26,41 +26,16 @@ namespace FNR.ElasticSearch
             ElasticClient elastic = GetElasticClient();
             if (!elastic.IndexExists(indexName).Exists)
             {
-                var createIndexResponse = elastic.CreateIndex(indexName);
-                var mappingBlogPost = elastic.Map<Novel>(s => s.AutoMap());
+                var descriptor=new CreateIndexDescriptor(indexName)
+                    .Settings(s => s.NumberOfShards(5).NumberOfReplicas(1))
+                        .Mappings(ms => ms
+                            .Map<Novel>(m => m
+                                .AutoMap()
+                                .Properties(ps => ps
+                                    .Nested<Section>(n => n
+                                        .Name(c => c.Sections)))));
+                elastic.CreateIndex(descriptor);
             }
-            //var indexExist = elastic.IndexExists(indexName);
-            //if (!indexExist.Exists)
-            //{
-            //    //基本配置                
-            //    IIndexState indexState = new IndexState()
-            //    {
-            //        Settings = new IndexSettings()
-            //        {
-            //            NumberOfReplicas = 1,//副本数               
-            //            NumberOfShards = 6//分片数                
-            //        }
-            //    };
-            //    //ICreateIndexResponse response = client.CreateIndex(IndexName, p => p.Mappings(m => m.Map<ES_PUB_Stock>(mp => mp.AutoMap())));  
-            //    ICreateIndexResponse response = elastic.CreateIndex(indexName, p => p
-            //    .InitializeUsing(indexState)
-            //        .Mappings(ms =>
-            //            ms.Map<Novel>(m =>
-            //                m.AutoMap()
-            //                    .Properties(ps =>
-            //                        ps.Nested<Section>(n =>
-            //                            n.Name(c => c.Sections))))));
-            //    if (response.IsValid)
-            //    {
-            //        string msg = string.Format("索引创建成功！");
-            //        Console.WriteLine(msg);
-            //    }
-            //    else
-            //    {
-            //        string msg = string.Format("索引创建失败！");
-            //        Console.WriteLine(msg);
-            //    }
-            //}
 
         }
 
@@ -85,6 +60,12 @@ namespace FNR.ElasticSearch
         q.QueryString(qs => qs.Query(queryStr))).Size(count));
 
             return searchResponse.Documents.ToList();
+        }
+
+        public static void DeleteIndex()
+        {
+            ElasticClient elastic = GetElasticClient();
+            elastic.DeleteIndex(new DeleteIndexDescriptor(indexName).AllIndices());
         }
     }
 }
