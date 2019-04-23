@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using FNR.Model;
 
 namespace FNR.Crawler
@@ -65,7 +66,7 @@ namespace FNR.Crawler
         {
             novel.Intro = Regex.Match(htmlContent, "<p>([^<]+?)<br[^/]+/>").Groups[1].Value.Replace("&nbsp;", "").Trim();
             //novel.Cover = new Crawler.Crawler().GetHtmlImage(Regex.Match(htmlContent, "https://www.23us.so/files/article/image/.+s.jpg").Value);
-            novel.Cover = Regex.Match(htmlContent, "https://www.23us.so/files/article/image/.+s.jpg").Value.Trim();
+            novel.Cover = new Uri(Regex.Match(htmlContent, "https://www.23us.so/files/article/image/.+s.jpg").Value.Trim());
             novel.Lately = Regex.Match(Regex.Match(htmlContent, "最近章节[\\s\\S]+?</a>").Value, ">(.+)<").Groups[1].Value.Trim();
             novel.DirectoryUri = Regex.Match(htmlContent, "https://www.23us.so/.+/index.html").Value.Trim();
             novel.Type = Regex.Match(Regex.Match(htmlContent, "小说类别[\\s\\S]+?</a>").Value, "<a[^>]+>(.+)</a>").Groups[1].Value.Trim();

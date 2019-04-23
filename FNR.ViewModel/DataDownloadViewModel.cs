@@ -47,7 +47,11 @@ namespace FNR.ViewModel
         public DelegateCommand DownloadTotalRankCommand { get; set; }
         public DelegateCommand DownloadHomePageCommand { get; set; }
         public DelegateCommand CancelCommand { get; set; }
-
+        public DelegateCommand DeleteDataBaseCommand { get; set; } = new DelegateCommand(() => 
+        {
+            if (MessageBox.Show("是否删除数据库？") == MessageBoxResult.OK)
+                ElasticHelper.DeleteIndex();
+        });
 
         public List<Novel> NovelList
         {

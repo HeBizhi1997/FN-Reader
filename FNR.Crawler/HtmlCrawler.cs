@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Drawing;
-
+using System.Windows.Media.Imaging;
 
 namespace FNR.Crawler
 {
@@ -26,15 +26,31 @@ namespace FNR.Crawler
         /// </summary>
         /// <param name="url">website url</param>
         /// <returns>web Image</returns>
-        public static Image GetHtmlImage(Uri url)
-        {
-            return GetHtmlImage(url.ToString());
+        public static BitmapFrame GetHtmlImage(Uri url)
+        {            
+            return Image2Bitmap(GetHtmlImage(url.ToString()));
         }
 
 
 
 
         #region Private Methods
+
+        /// <summary>
+        /// converter System.Drawing.Image to System.Windows.Controls.ImageSource
+        /// </summary>
+        /// <param name="img"></param>
+        /// <returns></returns>
+        private static BitmapFrame Image2Bitmap(Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Seek(0, SeekOrigin.Begin);
+                var decoder = BitmapDecoder.Create(ms, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                return decoder.Frames[0];
+            }
+        }
 
         /// <summary>
         /// Get the encoding method used by the website

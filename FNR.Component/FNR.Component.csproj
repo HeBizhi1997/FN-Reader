@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -67,6 +68,8 @@
       <DependentUpon>BookCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="ColorWheel.cs" />
+    <Compile Include="Converter\BaseValueConverter.cs" />
+    <Compile Include="Converter\Uri2ImageConverter.cs" />
     <Compile Include="Helper\VisualTreeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -104,6 +107,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FNR.Crawler\FNR.Crawler.csproj">
+      <Project>{040d755b-bc58-4342-b134-258d0f7f25bf}</Project>
+      <Name>FNR.Crawler</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

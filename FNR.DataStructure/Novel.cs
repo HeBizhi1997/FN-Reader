@@ -22,7 +22,7 @@ namespace FNR.Model
         [Text(Name = "type", Index = true)]
         public string Type { get; set; }
         [Text(Name = "cover", Index = false)]
-        public string Cover { get; set; } //Novel Cover uri
+        public Uri Cover { get; set; } //Novel Cover uri
         [Text(Name = "uri", Index = false)]
         public string Uri { get; set; }//Homepage uri
         [Text(Name = "state", Index = false)]
