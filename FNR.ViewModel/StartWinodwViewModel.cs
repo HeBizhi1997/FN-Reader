@@ -8,14 +8,12 @@ namespace FNR.ViewModel
 {
     public class StartWinodwViewModel : BindableBase
     {
-        private static readonly string LoginName = "admin";
-        private static readonly string LoginPass = "123";
-
         public DelegateCommand WinCloseCommand { get; set; } = new DelegateCommand(() => Application.Current.Shutdown());
         public DelegateCommand WinMaximizeCommand { get; set; } = new DelegateCommand(() => Application.Current.MainWindow.WindowState = Application.Current.MainWindow.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized);
         public DelegateCommand WinMinimizeCommand { get; set; } = new DelegateCommand(() => SystemCommands.MinimizeWindow(Application.Current.MainWindow));
         public DelegateCommand WinMoveCommand { get; set; } = new DelegateCommand(() => Application.Current.MainWindow.DragMove());
         public DelegateCommand<object> LoginCommand { get; set; }
+        public DelegateCommand RegisterCommand { get; set; }
 
         public DelegateCommand<object> SelectItemChangedCommand { get; set; }
 
@@ -26,14 +24,14 @@ namespace FNR.ViewModel
             set { SetProperty(ref currentPage, value); }
         }
 
-        private bool isAdminLogin = false;
-        public bool IsAdminLogin
+        private int userLevel = -1;
+        public int UserLevel
         {
-            get { return isAdminLogin; }
-            set { SetProperty(ref isAdminLogin, value); }
+            get { return userLevel; }
+            set { SetProperty(ref userLevel, value); }
         }
 
-        private string userName = "何毕之";
+        private string userName = "访客";
         public string UserName
         {
             get { return userName; }
@@ -64,21 +62,34 @@ namespace FNR.ViewModel
                             pass = child as PasswordBox;
                     }
 
-                    if (user.Text.Trim() == LoginName && pass.Password.Trim() == LoginPass)
+                    foreach (var item in ElasticSearch.ElasticHelper.QueryUser(user.Text.Trim()))
                     {
-                        MessageBox.Show("登陆成功！");
-
-                        IsAdminLogin = true;
-                        UserName = "管理员";
+                        if (user.Text.Trim() == item.Name && pass.Password.Trim() == item.Password)
+                        {
+                            MessageBox.Show("登陆成功！");
+                            if (item.Level > 0)
+                            {
+                                UserLevel = 1;
+                                UserName = "管理员";
+                            }
+                            else
+                            {
+                                UserName = item.Name;
+                            }
+                            user.Text = string.Empty;
+                            pass.Password = string.Empty;
+                            return;
+                        }
                     }
-                    else
-                        MessageBox.Show("登陆失败！");
 
+                    MessageBox.Show("登录失败!!!");
                     user.Text = string.Empty;
                     pass.Password = string.Empty;
                 }
 
             });
+
+            RegisterCommand = new DelegateCommand(() => CurrentPage = ApplicationPages.Register);
         }
     }
 }

@@ -18,7 +18,12 @@ namespace FNR.ElasticSearch
         }
         public static string DefaultIndex
         {
-            get { return "fnreadertest001"; }
+            get { return "fnreadertest002"; }
+        }
+
+        public static string UserIndex
+        {
+            get { return "fnreadertestuser002"; }
         }
     }
 }

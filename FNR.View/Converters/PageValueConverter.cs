@@ -15,6 +15,8 @@ namespace FNR.View
                     return new SearchPage();
                 case ApplicationPages.DataDownLoad:
                     return new DataDownload();
+                case ApplicationPages.Register:
+                    return new Register();
                 default:
                     Debugger.Break();
                     return null;

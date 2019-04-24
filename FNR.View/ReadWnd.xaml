@@ -60,6 +60,9 @@
                         </Grid>
 
                         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Bottom}">
+                                <materialDesign:PackIcon Kind="Settings"/>
+                            </Button>
                             <!--MinWindowState Btn-->
                             <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding WinMinimizeCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ReadWnd}}}" >
                                 <materialDesign:PackIcon Kind="WindowMinimize"/>
@@ -76,7 +79,7 @@
                 </materialDesign:ColorZone>
             </Grid>
             <Grid Grid.Row="1" Margin="20 10">
-                <TextBox IsReadOnly="True" TextWrapping="Wrap" Text="{Binding CurrentContent}"/>
+                <TextBox x:Name="textBox" IsReadOnly="True" TextWrapping="Wrap" Text="{Binding CurrentContent}" />
             </Grid>
             <!--<StackPanel Grid.Row="1" Visibility="{Binding isDataDownloading,Converter={local:Bool2VisibleConverter}}" VerticalAlignment="Center" Margin="20">
                 <materialDesign:ColorZone Mode="PrimaryDark">
@@ -122,5 +125,23 @@
                 </Grid>
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.LeftDrawerContent>
+
+        <materialDesign:DrawerHost.BottomDrawerContent>
+            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="300">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="字体大小:" IsReadOnly="True"/>
+                            <Slider Width="300" Minimum="8" Maximum="64" Value="{Binding FontSize, ElementName=textBox,Mode=TwoWay}" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:ColorZone>
+        </materialDesign:DrawerHost.BottomDrawerContent>
     </materialDesign:DrawerHost>
 </Window>

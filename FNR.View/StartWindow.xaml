@@ -17,7 +17,7 @@
     </Window.DataContext>
 
     <materialDesign:DrawerHost>
-        
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
             <!--头部-->
             <Grid Grid.Row="0">
-                <materialDesign:ColorZone Mode="PrimaryDark" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                <materialDesign:ColorZone Mode="PrimaryDark" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding WinMoveCommand}"/>
@@ -59,7 +59,7 @@
                         <Grid Grid.Column="1">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontFamily="Ink Free" FontSize="16"  Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartWindow}}}"/>
                         </Grid>
-                        
+
                         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <!--Themes Selecter Btn-->
                             <Button Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Bottom}">
@@ -96,7 +96,7 @@
 
         <!--底部弹框 改变颜色主题-->
         <materialDesign:DrawerHost.BottomDrawerContent>
-            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth2">
                 <Grid Width="800">
                     <TextBox Text="选择主题颜色及风格" HorizontalAlignment="Center" IsReadOnly="True" Margin="0 5"/>
                     <ctrls:ColorWheel Stretch="Uniform" Height="400"/>
@@ -111,18 +111,21 @@
 
         <!--右侧弹框 登录-->
         <materialDesign:DrawerHost.RightDrawerContent>
-            <materialDesign:ColorZone Mode="PrimaryMid" materialDesign:ShadowAssist.ShadowDepth="Depth3" Width="300" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
+            <materialDesign:ColorZone Mode="PrimaryLight" materialDesign:ShadowAssist.ShadowDepth="Depth2" Width="300" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
                 <StackPanel VerticalAlignment="Center" Width="200">
                     <TextBox materialDesign:HintAssist.Hint="Login Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" HorizontalAlignment="Center" Margin="0 5"/>
                     <PasswordBox materialDesign:HintAssist.Hint="Login Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Width="200" HorizontalAlignment="Center" Margin="0 5"/>
-                    <Button Width="100" Content="登录" HorizontalAlignment="Right" Margin="0 15" Command="{Binding LoginCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}" />
+                    <StackPanel  Orientation="Horizontal" Margin="10 0">
+                        <Button Width="80" Content="注册" Margin="0 15" Command="{Binding RegisterCommand}" HorizontalAlignment="Left"/>
+                        <Button Width="80" Content="登录" Margin="20 15 0 15" Command="{Binding LoginCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2,AncestorType={x:Type StackPanel}}}" HorizontalAlignment="Right"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.RightDrawerContent>
 
         <!--左侧弹框 内容切换-->
         <materialDesign:DrawerHost.LeftDrawerContent>
-            <materialDesign:ColorZone Mode="PrimaryMid" materialDesign:ShadowAssist.ShadowDepth="Depth3" Width="300" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
+            <materialDesign:ColorZone Mode="PrimaryMid" materialDesign:ShadowAssist.ShadowDepth="Depth2" Width="300" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="80"/>
@@ -145,8 +148,14 @@
                                     <i:InvokeCommandAction Command="{Binding SelectItemChangedCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            
-                            <ListViewItem Height="45">
+
+                            <ListViewItem Height="45" Tag="-1">
+                                <ListViewItem.Visibility>
+                                    <MultiBinding Converter="{local:Level2VisibleConverter}">
+                                        <Binding Path="UserLevel"/>
+                                        <Binding Path="Tag" RelativeSource="{RelativeSource Mode=Self}"/>
+                                    </MultiBinding>
+                                </ListViewItem.Visibility>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <materialDesign:ColorZone Mode="PrimaryDark" Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
                                         <materialDesign:PackIcon Kind="Search" Margin="15 0"/>
@@ -155,7 +164,13 @@
                                 </StackPanel>
                             </ListViewItem>
 
-                            <ListViewItem Height="45" Visibility="{Binding IsAdminLogin,Converter={local:Bool2VisibleConverter}}">
+                            <ListViewItem Height="45" Tag="1">
+                                <ListViewItem.Visibility>
+                                    <MultiBinding Converter="{local:Level2VisibleConverter}">
+                                        <Binding Path="UserLevel"/>
+                                        <Binding Path="Tag" RelativeSource="{RelativeSource Mode=Self}"/>
+                                    </MultiBinding>
+                                </ListViewItem.Visibility>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <materialDesign:ColorZone Mode="PrimaryDark" Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
                                         <materialDesign:PackIcon Kind="DownloadNetwork" Margin="15 0"/>

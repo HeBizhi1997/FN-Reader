@@ -14,8 +14,8 @@ namespace FNR.ViewModel
         {
             QueryCommand = new DelegateCommand<string>((p) =>
             {
-                NovelList = ElasticSearch.ElasticHelper.Query(p, 5);
-            });
+                NovelList = ElasticSearch.ElasticHelper.Query(p, 10);
+           });
 
 
             ReadCommand = new DelegateCommand<object>((p) =>

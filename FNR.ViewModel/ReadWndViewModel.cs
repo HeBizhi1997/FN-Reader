@@ -49,6 +49,8 @@ namespace FNR.ViewModel
             });
 
             DownloadTenSectionsCommand = new DelegateCommand(() => Datadownload());
+
+            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[0].Html));
         }
 
         private Novel book;

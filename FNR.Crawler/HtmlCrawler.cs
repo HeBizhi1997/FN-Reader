@@ -27,8 +27,10 @@ namespace FNR.Crawler
         /// <param name="url">website url</param>
         /// <returns>web Image</returns>
         public static BitmapFrame GetHtmlImage(Uri url)
-        {            
-            return Image2Bitmap(GetHtmlImage(url.ToString()));
+        {
+            if (url != null)
+                return Image2Bitmap(GetHtmlImage(url.ToString()));
+            return null;
         }
 
 

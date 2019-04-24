@@ -82,8 +82,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\BaseMultiValueConverter.cs" />
     <Compile Include="Converters\BaseValueConverter.cs" />
-    <Compile Include="Converters\Bool2VisibleConverter.cs" />
+    <Compile Include="Converters\Level2VisibleConverter.cs" />
     <Compile Include="Converters\PageValueConverter.cs" />
     <Compile Include="Page\DataDownload.xaml.cs">
       <DependentUpon>DataDownload.xaml</DependentUpon>
@@ -93,6 +94,9 @@
     </Compile>
     <Compile Include="ReadWnd.xaml.cs">
       <DependentUpon>ReadWnd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Register.xaml.cs">
+      <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
@@ -149,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReadWnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Register.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

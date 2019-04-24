@@ -92,6 +92,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ReadWndViewModel.cs" />
+    <Compile Include="RegisterPageViewModel.cs" />
     <Compile Include="SearchPageViewModel.cs" />
     <Compile Include="StartWinodwViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

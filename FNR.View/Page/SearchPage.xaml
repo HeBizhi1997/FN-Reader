@@ -5,8 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:ViewModel="clr-namespace:FNR.ViewModel;assembly=FNR.ViewModel"
-      xmlns:component="clr-namespace:FNR.Component;assembly=FNR.Component"
-      xmlns:local="clr-namespace:FNR.View"
       x:Class="FNR.View.SearchPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"

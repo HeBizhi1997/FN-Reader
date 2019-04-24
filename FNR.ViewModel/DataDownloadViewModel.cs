@@ -47,7 +47,7 @@ namespace FNR.ViewModel
         public DelegateCommand DownloadTotalRankCommand { get; set; }
         public DelegateCommand DownloadHomePageCommand { get; set; }
         public DelegateCommand CancelCommand { get; set; }
-        public DelegateCommand DeleteDataBaseCommand { get; set; } = new DelegateCommand(() => 
+        public DelegateCommand DeleteDataBaseCommand { get; set; } = new DelegateCommand(() =>
         {
             if (MessageBox.Show("是否删除数据库？") == MessageBoxResult.OK)
                 ElasticHelper.DeleteIndex();
@@ -110,9 +110,10 @@ namespace FNR.ViewModel
             };
 
             //信息准备
-            links = HtmlAnalysis.AnalysisTotalRankPageCount(HtmlCrawler.GetHtmlContent(UriRoot));
+            //links = HtmlAnalysis.AnalysisTotalRankPageCount(HtmlCrawler.GetHtmlContent(UriRoot));
             IPList = HtmlAnalysis.GetIPList(HtmlCrawler.GetHtmlContent(IPNet));
 
+            links = 600;
 
             Worker.DoWork += Work_DownloadTotalRank;
             Worker.RunWorkerAsync(links);
@@ -160,8 +161,10 @@ namespace FNR.ViewModel
                     e.Cancel = true;
                     return;
                 }
-
-                GetHtmlContent(IPList[i % IPList.Count], UriPart1 + (i + 1) + UriPart2);
+                while (!GetHtmlContent(IPList[i % IPList.Count], UriPart1 + (i + 1) + UriPart2))
+                {
+                    IPList.RemoveAt(i % IPList.Count);
+                }
 
                 backgroundWorker.ReportProgress(i, i.ToString());
             }
@@ -207,8 +210,9 @@ namespace FNR.ViewModel
             }
             else
             {
+                NovelList.RemoveAll(p => p == null);
                 ExtractingHomePageData();
-
+                NovelList.RemoveAll(p => p.Intro == string.Empty || p.Intro == null);
                 InsertOrUpdateDate();
 
                 CurrentDownloadHomePageMessage = "【任务完成】";
@@ -237,8 +241,11 @@ namespace FNR.ViewModel
                     e.Cancel = true;
                     return;
                 }
-
-                GetHtmlContent(IPList[i % IPList.Count], NovelList[i].Uri);
+                if (NovelList[i] != null)
+                    while (!GetHtmlContent(IPList[i % IPList.Count], NovelList[i].Uri))
+                    {
+                        IPList.RemoveAt(i % IPList.Count);
+                    }
 
                 backgroundWorker.ReportProgress(i, i.ToString());
             }
@@ -250,10 +257,7 @@ namespace FNR.ViewModel
         private void InsertOrUpdateDate()
         {
             ElasticHelper.CreateIndex();
-            foreach (var item in NovelList)
-            {
-                ElasticHelper.Insert(item);
-            }
+            ElasticHelper.Insert(NovelList) ;
         }
 
 
@@ -272,16 +276,23 @@ namespace FNR.ViewModel
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="html"></param>
-        private void GetHtmlContent(string ip, string html)
+        private bool GetHtmlContent(string ip, string html)
         {
             try
             {
                 IPChange.IPChange.SetProxyIP(ip);
-                OriginHtml.Add(HtmlCrawler.GetHtmlContent(new Uri(html)));
+                if (HtmlCrawler.GetHtmlContent(new Uri(html)) is string content)
+                {
+                    OriginHtml.Add(content);
+                    return true;
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+                return false;
             }
         }
 
@@ -304,6 +315,7 @@ namespace FNR.ViewModel
         /// </summary>
         private void ExtractingHomePageData()
         {
+            OriginHtml.RemoveAll(p => p == string.Empty || p == null);
             ParallelLoopResult result = Parallel.ForEach(OriginHtml.ToArray(), (htmlContent, state, i) =>
             {
                 NovelList[(int)i] = HtmlAnalysis.AnalysisHomePage(NovelList[(int)i], htmlContent);

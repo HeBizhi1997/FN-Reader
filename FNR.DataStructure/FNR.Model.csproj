@@ -7,8 +7,8 @@
     <ProjectGuid>{DB6F00C7-7B28-4E50-B4A0-FFADBE8C938E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FNR.DataStructure</RootNamespace>
-    <AssemblyName>FNR.DataStructure</AssemblyName>
+    <RootNamespace>FNR.Model</RootNamespace>
+    <AssemblyName>FNR.Model</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Book.cs" />
     <Compile Include="Novel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Section.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
