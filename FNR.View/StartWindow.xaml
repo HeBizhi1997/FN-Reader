@@ -179,6 +179,20 @@
                                 </StackPanel>
                             </ListViewItem>
 
+                            <ListViewItem Height="45" Tag="0">
+                                <ListViewItem.Visibility>
+                                    <MultiBinding Converter="{local:Level2VisibleConverter}">
+                                        <Binding Path="UserLevel"/>
+                                        <Binding Path="Tag" RelativeSource="{RelativeSource Mode=Self}"/>
+                                    </MultiBinding>
+                                </ListViewItem.Visibility>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <materialDesign:ColorZone Mode="PrimaryDark" Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+                                        <materialDesign:PackIcon Kind="AutoStories" Margin="15 0"/>
+                                    </materialDesign:ColorZone>
+                                    <TextBlock Text="书架" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ListViewItem>
                         </ListView>
                     </ScrollViewer>
                 </Grid>

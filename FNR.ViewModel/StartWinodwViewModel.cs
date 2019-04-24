@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using FNR.Common;
+using FNR.Model;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -38,8 +39,20 @@ namespace FNR.ViewModel
             set { SetProperty(ref userName, value); }
         }
 
+        private User reader;
+        public User Reader
+        {
+            get { return reader; }
+            set { SetProperty(ref reader, value); }
+        }
         public StartWinodwViewModel()
         {
+            //实例化访客用户 权限为-1
+            Reader = new User()
+            {
+                Level = -1
+            };
+
             SelectItemChangedCommand = new DelegateCommand<object>((p) =>
            {
                if (p is ListView listView)
@@ -76,6 +89,7 @@ namespace FNR.ViewModel
                             {
                                 UserName = item.Name;
                             }
+                            Reader = item;
                             user.Text = string.Empty;
                             pass.Password = string.Empty;
                             return;

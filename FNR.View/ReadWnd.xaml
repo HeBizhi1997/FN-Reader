@@ -4,17 +4,18 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:FNR.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:component="clr-namespace:FNR.Component;assembly=FNR.Component"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         Title="{Binding Book.Name}" 
         Height="600"
         Width="1000">
-    <!--<i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding DownloadTenSectionsCommand}"/>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding WinClosingCommand}" CommandParameter="{Binding ElementName=listView}"/>
         </i:EventTrigger>
-    </i:Interaction.Triggers>-->
+    </i:Interaction.Triggers>
 
     <materialDesign:DrawerHost>
         <Grid>
@@ -78,8 +79,11 @@
                     </Grid>
                 </materialDesign:ColorZone>
             </Grid>
-            <Grid Grid.Row="1" Margin="20 10">
-                <TextBox x:Name="textBox" IsReadOnly="True" TextWrapping="Wrap" Text="{Binding CurrentContent}" />
+
+            <Grid Grid.Row="1">
+                <materialDesign:ColorZone Mode="Standard" >
+                    <TextBox x:Name="textBox" IsReadOnly="True" TextWrapping="Wrap" Text="{Binding CurrentContent}" Margin="20 10"/>
+                </materialDesign:ColorZone>
             </Grid>
             <!--<StackPanel Grid.Row="1" Visibility="{Binding isDataDownloading,Converter={local:Bool2VisibleConverter}}" VerticalAlignment="Center" Margin="20">
                 <materialDesign:ColorZone Mode="PrimaryDark">
@@ -107,7 +111,7 @@
                     </Button>
 
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding Book.Sections}">
+                        <ListView x:Name="listView" ItemsSource="{Binding Book.Sections}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding SelectItemChangedCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"/>
@@ -127,19 +131,33 @@
         </materialDesign:DrawerHost.LeftDrawerContent>
 
         <materialDesign:DrawerHost.BottomDrawerContent>
-            <materialDesign:ColorZone Mode="Standard" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="300">
+            <materialDesign:ColorZone Mode="Accent" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="300">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20">
+                    <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
                             <TextBox Text="字体大小:" IsReadOnly="True"/>
                             <Slider Width="300" Minimum="8" Maximum="64" Value="{Binding FontSize, ElementName=textBox,Mode=TwoWay}" Margin="5 0 0 0"/>
                         </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0 20">
+                            <TextBox Text="字       体:" IsReadOnly="True"/>
+                            <ComboBox SelectedIndex="0" Width="300" SelectedValue="{Binding FontFamily, ElementName=textBox,Mode=TwoWay}" Margin="5 0 0 0" ItemsSource="{Binding SysFontFamilies}"/>
+                        </StackPanel>
+
+                        <Button Width="55" ToolTip="下载整本小说" Height="55" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource MaterialDesignFloatingActionMiniAccentButton}" Command="{Binding DownloadSectionsCommand}" IsEnabled="{Binding IsDataNotDownloading}">
+                            <materialDesign:PackIcon Kind="Download" Width="35" Height="35"/>
+                        </Button>
+
+                        <TextBlock Margin="0 3" Text="{Binding CurrentDownloadMessage}"/>
+                        <ProgressBar Value="{Binding CurrentDownloadProgress}"/>
                     </StackPanel>
+
+                    <component:ColorWheel Grid.Column="1" Stretch="Uniform"/>
                 </Grid>
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.BottomDrawerContent>

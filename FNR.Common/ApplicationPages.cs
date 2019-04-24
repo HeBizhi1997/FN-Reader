@@ -4,6 +4,7 @@
     {
         NovelSearch = 0,
         DataDownLoad = 1,
-        Register = 2
+        BookShelf = 2,
+        Register = 3
     }
 }

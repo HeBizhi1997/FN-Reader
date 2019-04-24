@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using FNR.Crawler;
 using FNR.Model;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -20,22 +22,20 @@ namespace FNR.ViewModel
         private DateTime StrartTime = DateTime.Now; //任务开始时间
         private BackgroundWorker Worker;
         private int links = 0;
+        private string path;
 
-
-        public DelegateCommand<object> WinCloseCommand { get; set; } = new DelegateCommand<object>((p) =>
-        {
-            (p as Window).Close();
-            Application.Current.MainWindow.Show();
-        });
+        public DelegateCommand<object> WinCloseCommand { get; set; }
+        public DelegateCommand<object> WinClosingCommand { get; set; }
         public DelegateCommand<object> WinMaximizeCommand { get; set; } = new DelegateCommand<object>((p) => (p as Window).WindowState = (p as Window).WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized);
         public DelegateCommand<object> WinMinimizeCommand { get; set; } = new DelegateCommand<object>((p) => SystemCommands.MinimizeWindow(p as Window));
         public DelegateCommand<object> WinMoveCommand { get; set; } = new DelegateCommand<object>((p) => (p as Window).DragMove());
         public DelegateCommand<object> SelectItemChangedCommand { get; set; }
-        public DelegateCommand DownloadTenSectionsCommand { get; set; }
+        public DelegateCommand DownloadSectionsCommand { get; set; }
 
-        public ReadWndViewModel(object data)
+        public ReadWndViewModel(object data, object vm)
         {
             Book = data as Novel;
+            Reader = (vm as StartWinodwViewModel).Reader;
 
             GetSectionLinks(Book);
 
@@ -48,19 +48,79 @@ namespace FNR.ViewModel
                 }
             });
 
-            DownloadTenSectionsCommand = new DelegateCommand(() => Datadownload());
+            DownloadSectionsCommand = new DelegateCommand(() =>
+            {
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "txt files(*.txt)|*.txt|word files(*.doc)|*.doc|All files(*.*)|*.*",
+                    FileName = Book.Name,
+                    DefaultExt = "txt"
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    path = dialog.FileName;
+                    Datadownload();
+                }
+            });
 
-            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[0].Html));
+            int index = 0;
+            if (Reader.Level >= 0)
+                foreach (var item in Reader.Books)
+                {
+                    if (Book.Id == item.BookID)
+                        index = item.SectionIndex;
+                }
+
+            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[index].Html));
+
+            SysFontFamilies = Fonts.SystemFontFamilies;
+
+            WinCloseCommand = new DelegateCommand<object>((p) =>
+            {
+                (p as Window).Close();
+                Application.Current.MainWindow.Show();
+            });
+
+            WinClosingCommand = new DelegateCommand<object>((p) =>
+              {
+                  //若非访客模式
+                  if (reader.Level >= 0)
+                      //若书架上已存在该书 则更新本次阅读进度
+                      if (index > 0)
+                      {
+                          Reader.Books.Find(b => b.BookID == Book.Id).SectionIndex = (p as ListView).SelectedIndex;
+                          ElasticSearch.ElasticHelper.Insert(Reader);
+                      }
+                  //若书架尚不存在此书 则新添加入列表
+                      else
+                      {
+                          if (MessageBox.Show("是否加入书架?") == MessageBoxResult.OK)
+                          {
+                              Reader.Books.Add(new Model.Book()
+                              {
+                                  BookID = Book.Id,
+                                  SectionIndex = (p as ListView).SelectedIndex
+                              });
+                              ElasticSearch.ElasticHelper.Insert(Reader);
+                          }
+                      }
+              });
         }
 
+        private User reader;
         private Novel book;
         private string currentContent;
-        private bool isDataDownloading = false;
-        private string currentDownloadMessage;
+        private bool isDataNotDownloading = true;
+        private string currentDownloadMessage = string.Empty;
         private double currentDownloadProgress = 0d;
+        private ICollection<FontFamily> sysFontFamilies = new List<FontFamily>();
 
 
-
+        public User Reader
+        {
+            get { return reader; }
+            set { SetProperty(ref reader, value); }
+        }
         public Novel Book
         {
             get { return book; }
@@ -71,10 +131,10 @@ namespace FNR.ViewModel
             get { return currentContent; }
             set { SetProperty(ref currentContent, value); }
         }
-        public bool IsDataDownloading
+        public bool IsDataNotDownloading
         {
-            get { return isDataDownloading; }
-            set { SetProperty(ref isDataDownloading, value); }
+            get { return isDataNotDownloading; }
+            set { SetProperty(ref isDataNotDownloading, value); }
         }
         public string CurrentDownloadMessage
         {
@@ -86,17 +146,19 @@ namespace FNR.ViewModel
             get { return currentDownloadProgress; }
             set { SetProperty(ref currentDownloadProgress, value); }
         }
+        public ICollection<FontFamily> SysFontFamilies
+        {
+            get { return sysFontFamilies; }
+            set { SetProperty(ref sysFontFamilies, value); }
+        }
 
 
-
-
-
-        public void Datadownload()
+        private void Datadownload()
         {
             //数据初始化
             StrartTime = DateTime.Now;
             OriginHtml = new List<string>();
-            IsDataDownloading = true;
+            IsDataNotDownloading = false;
             Worker = new BackgroundWorker
             {
                 WorkerReportsProgress = true,//支持进度信息获取
@@ -119,7 +181,7 @@ namespace FNR.ViewModel
             BackgroundWorker backgroundWorker = sender as BackgroundWorker;
             int count = int.Parse(e.Argument.ToString());
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < count; i++)
             {
 
                 if (backgroundWorker.CancellationPending)
@@ -157,7 +219,7 @@ namespace FNR.ViewModel
                 CurrentDownloadMessage = "【任务完成】";
                 CurrentDownloadProgress = 100d;
             }
-            IsDataDownloading = false;
+            IsDataNotDownloading = true;
         }
 
 
@@ -191,10 +253,15 @@ namespace FNR.ViewModel
 
         private void ExtractingData()
         {
-            ParallelLoopResult result = Parallel.ForEach(OriginHtml.ToArray(), (htmlContent, state, i) =>
+            var Content = string.Empty;
+            int index = 0;
+            foreach (var htmlContent in OriginHtml)
             {
-                book.Sections[(int)i].Content = HtmlAnalysis.AnalysisSectionContent(htmlContent);
-            });
+                Content += book.Sections[index].Name + Environment.NewLine + HtmlAnalysis.AnalysisSectionContent(htmlContent) + Environment.NewLine;
+                index++;
+            }
+            File.WriteAllText(path, Content);
+            MessageBox.Show("保存成功！");
         }
     }
 }
