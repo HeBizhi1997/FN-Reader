@@ -45,18 +45,20 @@ namespace FNR.ViewModel
 
             NameVaildCommand = new DelegateCommand<object>((p) =>
               {
-                  foreach (var item in ElasticHelper.QueryUser((p as TextBox).Text))
+                  var items = ElasticHelper.QueryUser((p as TextBox).Text);
+                  if (items.Count > 0)
+                      foreach (var item in items)
+                      {
+                          if (item.Name == (p as TextBox).Text)
+                          {
+                              IsNameUnique = false;
+                              (p as TextBox).Foreground = Brushes.Red;
+                          }
+                      }
+                  else
                   {
-                      if (item.Name == (p as TextBox).Text)
-                      {
-                          IsNameUnique = false;
-                          (p as TextBox).Foreground = Brushes.Red;
-                      }
-                      else
-                      {
-                          IsNameUnique = true;
-                          (p as TextBox).Foreground = Brushes.White;
-                      }
+                      IsNameUnique = true;
+                      (p as TextBox).Foreground = Brushes.White;
                   }
               });
         }

@@ -30,7 +30,7 @@ namespace FNR.View
             {
                 ReadWnd readWnd = new ReadWnd()
                 {
-                    DataContext = new ReadWndViewModel(btn.Tag, Application.Current.MainWindow.DataContext)
+                    DataContext = new ReadWndViewModel(btn.Tag)
                 };
                 readWnd.Show();
                 Application.Current.MainWindow.Hide();

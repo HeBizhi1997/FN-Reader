@@ -78,24 +78,46 @@ namespace FNR.ElasticSearch
 
         public static List<Novel> Query(string queryStr)
         {
-            var searchResponse = GetElasticClient().Search<Novel>(es => es.Query(q =>
-                q.QueryString(qs => qs.Query(queryStr))));
+            var searchResponse = GetElasticClient().Search<Novel>(es => es.Query(q => q
+                      .MultiMatch(c => c
+                          .Fields(f => f.Field(p => p.Name).Field(p => p.Author).Field(p => p.Intro))
+                          .Query(queryStr)
+                          .Analyzer("ik_smart")
+                      )));
 
             return searchResponse.Documents.ToList();
         }
 
         public static List<Novel> Query(string queryStr, int count)
         {
-            var searchResponse = GetElasticClient().Search<Novel>(es => es.Query(q =>
-                q.QueryString(qs => qs.Query(queryStr))).Size(count));
+            var searchResponse = GetElasticClient().Search<Novel>(es=>es.Query(q=> q
+                    .MultiMatch(c => c
+                        .Fields(f => f.Field(p => p.Name).Field(p=>p.Author).Field(p=>p.Intro))
+                        .Query(queryStr)
+                        .Analyzer("ik_smart")
+                    )).Size(count));
 
             return searchResponse.Documents.ToList();
         }
 
         public static List<User> QueryUser(string queryStr, int count = 5)
         {
-            var searchResponse = GetElasticClient(ElasticsearchConfiguration.UserIndex).Search<User>(es => es.Query(q =>
-                q.QueryString(qs => qs.Query(queryStr))).Size(count));
+            var searchResponse = GetElasticClient(ElasticsearchConfiguration.UserIndex).Search<User>(es => es.Query(q => q
+                    .Match(c => c
+                        .Field(p=>p.Name)
+                        .Query(queryStr)
+                    )).Size(count));
+
+            return searchResponse.Documents.ToList();
+        }
+
+        public static List<Novel> QueryById(int id)
+        {
+            var searchResponse = GetElasticClient().Search<Novel>(s => s
+                    .Query(q => q
+                        .Match(m => m
+                            .Field(f => f.Id)
+                            .Query(id.ToString()))));
 
             return searchResponse.Documents.ToList();
         }

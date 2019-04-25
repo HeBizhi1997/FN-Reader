@@ -65,7 +65,7 @@
                                     VerticalAlignment="Bottom"
                                     Margin="0 0 5 10" Width="35" Height="35"
                                     BorderBrush="{x:Null}"
-                                    ToolTip="阅读" Tag="{Binding}">
+                                    ToolTip="阅读" Tag="{Binding}" >
                                     <materialDesign:PackIcon Kind="Book"/>
                                 </Button>
                                 <StackPanel Margin="8 0 0 0" Grid.Column="1">

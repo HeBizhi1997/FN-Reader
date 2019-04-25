@@ -82,16 +82,17 @@ namespace FNR.ViewModel
                             MessageBox.Show("登陆成功！");
                             if (item.Level > 0)
                             {
-                                UserLevel = 1;
                                 UserName = "管理员";
                             }
                             else
                             {
                                 UserName = item.Name;
                             }
+                            UserLevel = item.Level;
                             Reader = item;
                             user.Text = string.Empty;
                             pass.Password = string.Empty;
+                            CurrentPage = ApplicationPages.NovelSearch;
                             return;
                         }
                     }

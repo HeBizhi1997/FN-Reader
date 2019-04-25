@@ -32,10 +32,10 @@ namespace FNR.ViewModel
         public DelegateCommand<object> SelectItemChangedCommand { get; set; }
         public DelegateCommand DownloadSectionsCommand { get; set; }
 
-        public ReadWndViewModel(object data, object vm)
+        public ReadWndViewModel(object data)
         {
             Book = data as Novel;
-            Reader = (vm as StartWinodwViewModel).Reader;
+            Reader = (Application.Current.MainWindow.DataContext as StartWinodwViewModel).Reader;
 
             GetSectionLinks(Book);
 
@@ -68,10 +68,13 @@ namespace FNR.ViewModel
                 foreach (var item in Reader.Books)
                 {
                     if (Book.Id == item.BookID)
+                    {
                         index = item.SectionIndex;
+                        break;
+                    }
                 }
 
-            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[index].Html));
+            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[index - 1].Html));
 
             SysFontFamilies = Fonts.SystemFontFamilies;
 
@@ -88,18 +91,23 @@ namespace FNR.ViewModel
                       //若书架上已存在该书 则更新本次阅读进度
                       if (index > 0)
                       {
-                          Reader.Books.Find(b => b.BookID == Book.Id).SectionIndex = (p as ListView).SelectedIndex;
+                          if ((p as ListView).SelectedIndex < 0)
+                              (p as ListView).SelectedIndex = index - 1;
+                          Reader.Books.Find(b => b.BookID == Book.Id).SectionIndex = (p as ListView).SelectedIndex + 1;
                           ElasticSearch.ElasticHelper.Insert(Reader);
                       }
-                  //若书架尚不存在此书 则新添加入列表
+                      //若书架尚不存在此书 则新添加入列表
                       else
                       {
                           if (MessageBox.Show("是否加入书架?") == MessageBoxResult.OK)
                           {
+                              if ((p as ListView).SelectedIndex < 0)
+                                  (p as ListView).SelectedIndex = index - 1;
+
                               Reader.Books.Add(new Model.Book()
                               {
                                   BookID = Book.Id,
-                                  SectionIndex = (p as ListView).SelectedIndex
+                                  SectionIndex = (p as ListView).SelectedIndex + 1
                               });
                               ElasticSearch.ElasticHelper.Insert(Reader);
                           }

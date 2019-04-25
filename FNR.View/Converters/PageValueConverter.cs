@@ -17,6 +17,8 @@ namespace FNR.View
                     return new DataDownload();
                 case ApplicationPages.Register:
                     return new Register();
+                case ApplicationPages.BookShelf:
+                    return new BookShelfPage();
                 default:
                     Debugger.Break();
                     return null;

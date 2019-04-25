@@ -9,7 +9,7 @@
         <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Center" 
                          Width="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BookCard}}}" 
                          Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
-            <materialDesign:ColorZone Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
+            <materialDesign:ColorZone Mode="Accent" materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="240"/>
@@ -82,15 +82,6 @@
                                 <TextBlock Text="{Binding Intro}" TextWrapping="Wrap"/>
                             </Grid>
                         </StackPanel>
-
-                        <Button  Style="{StaticResource MaterialDesignFloatingActionButton}"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom"
-                                    Margin="0 0 5 10" Width="35" Height="35"
-                                    BorderBrush="{x:Null}"
-                                    ToolTip="阅读">
-                            <materialDesign:PackIcon Kind="Book"/>
-                        </Button>
                     </Grid>
                 </Grid>
             </materialDesign:ColorZone>
