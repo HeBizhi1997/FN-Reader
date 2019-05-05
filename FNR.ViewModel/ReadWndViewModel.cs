@@ -74,7 +74,7 @@ namespace FNR.ViewModel
                     }
                 }
 
-            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[index - 1].Html));
+            CurrentContent = HtmlAnalysis.AnalysisSectionContent(HtmlCrawler.GetHtmlContent(Book.Sections[(index - 1) >= 0 ? (index - 1) : 0].Html));
 
             SysFontFamilies = Fonts.SystemFontFamilies;
 
